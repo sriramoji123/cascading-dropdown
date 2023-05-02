@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div class="form-section">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
+
+
+
+   
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+  </form>
+{% endblock %}
+
+{% block script %}
+  <script>
+    $(document).ready(function() {
+      $('#id_country').on('change', function() {
+        var countryId = $(this).val();
+        if (countryId) {
+          $.ajax({
+            url: '/customer-creation/load-states/',
+            data: {
+              'country_id': countryId
+            },
+            success: function(data) {
+              $('#id_state').html(data);
+              $('#id_city').html('<option value="">Select city</option>');
+            }
+          });
+        } else {
+          $('#id_state').html('<option value="">Select state</option>');
+          $('#id_city').html('<option value="">Select city</option>');
+        }
+      });
+
+      $('#id_state').on('change', function() {
+        var stateId = $(this).val();
+        if (stateId) {
+          $.ajax({
+            url: '/customer-creation/load-cities/',
+            data: {
+              'state_id': stateId
+            },
+            success: function(data) {
+              $('#id_city').html(data);
+            }
+          });
+        } else {
+          $('#id_city').html('<option value="">Select city</option>');
+        }
+      });
+    });
+  </script>
+  <style>
+    .form-section {
+        padding: 10px;
+        padding-left: 30px;
+    }
+    .country{
+        width: 100px;
+    }
+
+</style>    
+{% endblock %}
