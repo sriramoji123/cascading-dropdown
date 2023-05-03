@@ -1,0 +1,27 @@
+COUNTRY_CHOICES = (
+    ('', '---'),
+    ('US-usa', 'United States'),
+    ('CA-caa', 'Canada'),
+     ('va-vaa', 'Canada'),
+)
+
+ADDRESS1_CHOICES = (
+    ('', '---'),
+    ('CA', 'California'),
+    ('NY', 'New York'),
+    ('TX', 'Texas'),
+    ('US1-us1', 'US1'),
+    ('US2', 'US2'),
+    
+)
+
+ADDRESS2_CHOICES = (
+    ('', '---'),
+    ('SF', 'San Francisco'),
+    ('LA', 'Los Angeles'),
+    ('NYC', 'New York City'),
+    ('AUS', 'Austin'),
+    ('CA', 'inside california'),
+    ('US1', 'Inside Texas'),
+    ('US2', 'Inside Texas2'),
+)
