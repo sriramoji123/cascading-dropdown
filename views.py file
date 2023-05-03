@@ -1,0 +1,34 @@
+from django.shortcuts import render
+from .forms import LocationForm
+from .models import Location
+from .choices import ADDRESS1_CHOICES, ADDRESS2_CHOICES
+
+def location(request):
+    form = LocationForm()
+    if request.method == 'POST':
+        form = LocationForm(request.POST)
+        
+        if form.is_valid():
+            location = Location()
+            # process the form data here
+            
+            postal_code=form.cleaned_data["postal_code"]
+            address_1=form.cleaned_data["address_1"]
+            address_2=form.cleaned_data["address_2"]
+            
+            print(postal_code)
+            print(address_1)
+            print(address_2)
+            
+            location.postal_code=postal_code
+            location.address_1=address_1
+            location.address_2=address_2
+            
+            location.save()
+            
+            
+    context={
+        'ADDRESS1_CHOICES':ADDRESS1_CHOICES,
+        'ADDRESS2_CHOICES': ADDRESS2_CHOICES
+    }  
+    return render(request, 'template.html', {'form': form,'ADDRESS1_CHOICES':ADDRESS1_CHOICES,'ADDRESS2_CHOICES': ADDRESS2_CHOICES})
