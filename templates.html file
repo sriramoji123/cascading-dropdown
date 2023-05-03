@@ -1,0 +1,92 @@
+<html>
+    <body>
+        <form id="location-form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+          
+
+          <input
+                                type="submit"
+                                value="Submit"
+                                id="btn-next-restaurant-information"
+                                class="bgcolor"
+                              />
+        </form>
+          <script>
+            var ADDRESS2_CHOICES=[
+            {% for code,name in ADDRESS2_CHOICES %}
+            ["{{ code }}", "{{ name }}"],
+            {% endfor %}
+            ]
+        </script>
+        
+        <script>
+            var ADDRESS1_CHOICES=[
+            {% for code,name in ADDRESS1_CHOICES %}
+            ["{{ code }}", "{{ name }}"],
+            {% endfor %}
+            ]
+        </script>
+          <script>
+            var countrySelect = document.getElementById("id_postal_code");
+            var stateSelect = document.getElementById("id_address_1");
+            var citySelect = document.getElementById("id_address_2");
+        
+            countrySelect.addEventListener("change", function() {
+              // clear the state and city dropdowns
+              stateSelect.innerHTML = '<option value="">---</option>';
+              citySelect.innerHTML = '<option value="">---</option>';
+        
+              // get the selected country value
+              var countryValue = countrySelect.value;
+              const myArray = countryValue.split("-");
+        
+              // update the state dropdown with choices for the selected country
+              var stateChoices = [];
+              for (var i = 0; i < ADDRESS1_CHOICES.length; i++) {
+                if (ADDRESS1_CHOICES[i][0].startsWith(myArray[0])) {
+                  alert(countryValue);
+                  stateChoices.push(ADDRESS1_CHOICES[i]);
+                }
+              }
+              for (var i = 0; i < stateChoices.length; i++) {
+                var option = document.createElement("option");
+                option.value = stateChoices[i][0];
+                option.text = stateChoices[i][1];
+                stateSelect.appendChild(option);
+              }
+        
+              // trigger the change event on the state dropdown to update the city dropdown
+              stateSelect.dispatchEvent(new Event("change"));
+            });
+        
+            stateSelect.addEventListener("change", function() {
+              // clear the city dropdown
+              citySelect.innerHTML = '<option value="">---</option>';
+        
+              // get the selected state value
+              var stateValue = stateSelect.value;
+        
+              // update the city dropdown with choices for the selected state
+              var cityChoices = [];
+              for (var i = 0; i < ADDRESS2_CHOICES.length; i++) {
+                if (ADDRESS2_CHOICES[i][0].startsWith(stateValue)) {
+                  cityChoices.push(ADDRESS2_CHOICES[i]);
+                }
+              }
+              for (var i = 0; i < cityChoices.length; i++) {
+                var option = document.createElement("option");
+                option.value = cityChoices[i][0];
+                option.text = cityChoices[i][1];
+                citySelect.appendChild(option);
+              }
+            });
+          </script>
+          <style>
+            #id_postal_code
+            {
+              width:100%;
+            }
+          </style>
+</body>
+</html>
