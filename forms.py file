@@ -1,0 +1,7 @@
+from django import forms
+from .choices import COUNTRY_CHOICES, ADDRESS1_CHOICES, ADDRESS2_CHOICES
+
+class LocationForm(forms.Form):
+    postal_code = forms.ChoiceField(choices=COUNTRY_CHOICES, required=True)
+    address_1 = forms.ChoiceField(choices=ADDRESS1_CHOICES)
+    address_2 = forms.ChoiceField(choices=ADDRESS2_CHOICES)
