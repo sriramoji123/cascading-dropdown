@@ -1,0 +1,15 @@
+package com.techprimers.test.testcontrollerexample;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class HelloServiceTest {
+
+    @Test
+    public  void test(){
+        String hello = new HelloService().hello();
+        assertEquals(hello,"Hello World");
+    }
+
+}
